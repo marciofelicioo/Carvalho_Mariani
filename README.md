@@ -1,2 +1,2 @@
 # FindDuarte
-Html, javaScript little help (Carvalho&amp;Mariani_LDA)
+Html, javaScript app (Carvalho&amp;Mariani_LDA)
