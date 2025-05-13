@@ -1,8 +1,8 @@
 const estradosMap = {};
 
-// Função para carregar dados do CSV
+
 function loadCSVData() {
-    fetch('Tabela.csv') // Altere para o nome correto do seu CSV
+    fetch('Tabela.csv')
         .then(response => response.text())
         .then(data => {
             const lines = data.split('\n');
@@ -13,41 +13,41 @@ function loadCSVData() {
 
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i];
-                if (!line.startsWith(';') && line.trim() !== '') { // Verifica se a linha não é vazia
+                if (!line.startsWith(';') && line.trim() !== '') { 
                     const values = line.split(';');
-                    tamanhoLinha = values[0].trim(); // Remove espaços
+                    tamanhoLinha = values[0].trim(); 
                 }
 
                 if (line.startsWith(';')) {
                     const valoresLinha = line.split(';');
-                    const tipo = valoresLinha[1].trim(); // Remove espaços extras entre palavras
+                    const tipo = valoresLinha[1].trim(); 
 
                     for (let j = 2; j < valoresLinha.length; j++) {
-                        const tamanhoColuna = colSizes[j - 2].trim(); // Remove espaços
+                        const tamanhoColuna = colSizes[j - 2].trim(); 
                         const colMap = estradosMap[tamanhoLinha] || {};
                         const estrado = colMap[tamanhoColuna] || {};
 
-                        // Converte o valor para número, removendo espaços e trocando vírgula por ponto
+                        
                         const valorConvertido = parseFloat(valoresLinha[j].trim().replace(',', '.'));
 
-                        // Log para depuração
+                        
                         console.log(`Linha: ${tamanhoLinha}, Tipo: ${tipo}, Tamanho Coluna: ${tamanhoColuna}, Valor Original: ${valoresLinha[j]}, Valor Convertido: ${valorConvertido}`);
 
                         switch (tipo) {
                             case "Pés":
-                                estrado.pes = valorConvertido; // Armazena como número
+                                estrado.pes = valorConvertido; 
                                 break;
                             case "Alumínios2,50":
-                                estrado.aluminio_2_50 = valorConvertido; // Armazena como número
+                                estrado.aluminio_2_50 = valorConvertido; 
                                 break;
                             case "Alumínios1,25":
-                                estrado.aluminio_1_25 = valorConvertido; // Armazena como número
+                                estrado.aluminio_1_25 = valorConvertido; 
                                 break;
                             case "Tábuas":
-                                estrado.tabuas = valorConvertido; // Armazena como número
+                                estrado.tabuas = valorConvertido; 
                                 break;
                             default:
-                                console.warn(`Tipo desconhecido: ${tipo}`); // Log para tipos desconhecidos
+                                console.warn(`Tipo desconhecido: ${tipo}`);
                         }
                         colMap[tamanhoColuna] = estrado;
                         estradosMap[tamanhoLinha] = colMap;
@@ -59,10 +59,10 @@ function loadCSVData() {
         .catch(error => console.error('Erro ao carregar o CSV:', error));
 }
 
-// Função para buscar os dados do estrado
+
 function searchEstrado() {
-    const linha = document.getElementById('linha').value.trim(); // Remove espaços
-    const coluna = document.getElementById('coluna').value.trim(); // Remove espaços
+    const linha = document.getElementById('linha').value.trim(); 
+    const coluna = document.getElementById('coluna').value.trim(); 
     const resultDiv = document.getElementById('result');
 
     if (estradosMap[linha] && estradosMap[linha][coluna]) {
